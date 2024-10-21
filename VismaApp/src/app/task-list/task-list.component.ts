@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { TaskModel } from '../models/task.model';
+import { from, Observable } from 'rxjs';
 
 interface Task {
   id: string;
@@ -11,7 +11,7 @@ interface Task {
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [HttpClientModule], // Importar aquí también
+  imports: [HttpClientModule],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
@@ -20,14 +20,20 @@ interface Task {
 
 export class TaskListComponent implements OnInit {
   constructor(private http: HttpClient) { }
-  taskList : Task[] = [];
+  taskList: Task[] = [];
   url: string = 'https://localhost:7064/task';
 
+
   ngOnInit(): void {
-    this.http.get<Task[]>(this.url + '/getalltasks')
-      .subscribe((result: Task[]) => {
-        console.log(result);
+    const data = from(fetch(this.url + '/getalltasks'));
+
+    data.subscribe({
+      next: async (response) => {
+        const result: Task[] = await response.json();
         this.taskList = result;
-      })
+      },
+      error(err) { console.error('Error: ' + err); },
+      complete() { console.log('Completed'); }
+    });
   }
 }
