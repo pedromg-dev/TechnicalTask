@@ -1,5 +1,9 @@
 <div class="task-list-container">
     <ul class="task-list">
+        <h1>Task list</h1>
+        @if(taskList == null || taskList.length == 0) {
+            Task list empty
+        }
         @for (task of taskList; track task) {
         <li style="display: flex; gap: 20px; justify-content: space-between;">
             <div>
@@ -8,13 +12,15 @@
             <div>
                 @if(task.isCompleted) {
                 <span class="task-completed">
-                    Is completed
+                    Completed
                 </span>
                 }
                 @else {
                 <span class="task-not-completed">
                     Not completed
                 </span>
+
+                <button class="btn-complete-task" (click)="completeTask(task.id)" id="btnCompleteTask">Complete</button>
                 }
             </div>
         </li>
@@ -23,11 +29,11 @@
 
     </ul>
 
-<form>
-    <div style="display: flex; gap: 20px;">
-        <input [(ngModel)]="taskTitle" name="taskTitle">
-        <button class="btn-add-task" (click)="createTask()"> Add task</button>
-    </div>
-</form>
-    
+    <form>
+        <div style="display: flex; gap: 20px;">
+            <input [(ngModel)]="taskTitle" name="taskTitle">
+            <button class="btn btn-add-task" (click)="createTask()" id="btnCreateTask"> Add task</button>
+        </div>
+    </form>
+
 </div>

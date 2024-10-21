@@ -5,7 +5,9 @@ namespace AppApi.Controllers
 {
     public class TaskRequest
     {
-        public string Title { get; set; }
+        public string? Title { get; set; }
+
+        public string? Id { get; set; }
     }
 
     [ApiController]
@@ -36,6 +38,19 @@ namespace AppApi.Controllers
             };
 
             Summaries.Add(task);
+            return Ok();
+        }
+
+        [HttpPut("completetask")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult CompleteTask([FromBody] TaskRequest request)
+        {
+            var task = Summaries.FirstOrDefault(t => t.Id.ToString() == request.Id);
+            if (task == null) return BadRequest();
+
+            task.IsCompleted = true;
+
             return Ok();
         }
     }

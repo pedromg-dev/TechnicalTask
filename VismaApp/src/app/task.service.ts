@@ -24,4 +24,9 @@ export class TaskService {
     const task = { title };
     return this.http.post(`${this.apiUrl}/createtask`, task);
   }
+
+  completeTask(id: any) {
+    const task = { id };
+    return this.http.put(`${this.apiUrl}/completetask`, task);
+  }
 }

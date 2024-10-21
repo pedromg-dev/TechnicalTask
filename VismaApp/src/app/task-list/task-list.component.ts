@@ -46,4 +46,16 @@ export class TaskListComponent implements OnInit {
       })
     }
   }
+
+  completeTask(id: string): void {
+    if(id != null && id !== "") {
+      this.taskService.completeTask(id).subscribe({
+        next: async (response) => {
+          this.refreshTaskList();
+        },
+        error(err) { console.error('Error: ' + err); },
+        complete() { console.log('Completed'); }
+      })
+    }
+  }
 }
