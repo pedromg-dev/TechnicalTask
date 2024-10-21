@@ -36,12 +36,14 @@ export class TaskListComponent implements OnInit {
   }
 
   createTask(): void {
-    this.taskService.createTask(this.taskTitle).subscribe({
-      next: async (response) => {
-        this.refreshTaskList();
-      },
-      error(err) { console.error('Error: ' + err); },
-      complete() { console.log('Completed'); }
-    })
+    if(this.taskTitle != null && this.taskTitle !== "") {
+      this.taskService.createTask(this.taskTitle).subscribe({
+        next: async (response) => {
+          this.refreshTaskList();
+        },
+        error(err) { console.error('Error: ' + err); },
+        complete() { console.log('Completed'); }
+      })
+    }
   }
 }
