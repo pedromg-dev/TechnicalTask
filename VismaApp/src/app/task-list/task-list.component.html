@@ -23,10 +23,11 @@
 
     </ul>
 
-    <form>
-        <div style="display: flex; gap: 20px;">
-            <input id="name" type="text" formControlName="name">
-            <button class="btn-add-task"> Add task</button>
-        </div>
-    </form>
+<form>
+    <div style="display: flex; gap: 20px;">
+        <input [(ngModel)]="taskTitle" name="taskTitle">
+        <button class="btn-add-task" (click)="createTask()"> Add task</button>
+    </div>
+</form>
+    
 </div>

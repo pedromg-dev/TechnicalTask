@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
-
-interface Task {
-  id: string;
-  title: string;
-  isCompleted: boolean;
-}
+import { TaskService } from '../task.service';
+import { TaskModel } from '../models/task.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [HttpClientModule, FormsModule],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
@@ -19,18 +16,19 @@ interface Task {
 
 
 export class TaskListComponent implements OnInit {
-  constructor(private http: HttpClient) { }
-  taskList: Task[] = [];
-  url: string = 'https://localhost:7064/task';
-
+  taskList: TaskModel[] = []
+  taskTitle: string = "";
+  constructor(private http: HttpClient, private taskService: TaskService) { }
 
   ngOnInit(): void {
-    const data = from(fetch(this.url + '/getalltasks'));
 
-    data.subscribe({
+    this.refreshTaskList();
+  }
+
+  refreshTaskList() {
+    this.taskService.getTasks().subscribe({
       next: async (response) => {
-        const result: Task[] = await response.json();
-        this.taskList = result;
+        this.taskList = response;
       },
       error(err) { console.error('Error: ' + err); },
       complete() { console.log('Completed'); }
@@ -38,6 +36,12 @@ export class TaskListComponent implements OnInit {
   }
 
   createTask(): void {
-
+    this.taskService.createTask(this.taskTitle).subscribe({
+      next: async (response) => {
+        this.refreshTaskList();
+      },
+      error(err) { console.error('Error: ' + err); },
+      complete() { console.log('Completed'); }
+    })
   }
 }
