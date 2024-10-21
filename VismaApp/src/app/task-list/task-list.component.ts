@@ -36,4 +36,8 @@ export class TaskListComponent implements OnInit {
       complete() { console.log('Completed'); }
     });
   }
+
+  createTask(): void {
+
+  }
 }

@@ -6,8 +6,15 @@
 
 .task-completed {
     color: green;
+    font-size: 13px;
 }
 
 .task-not-completed {
     color: black;
+    font-size: 13px;
+}
+
+.btn-add-task {
+    padding: 10px 20px;
+    border-radius: 3px;
 }
