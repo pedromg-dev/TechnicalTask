@@ -2,15 +2,18 @@
     border: 1px solid black;
     border-radius: 3px;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .task-completed {
-    color: green;
+    color: #a5ed9d;
     font-size: 13px;
 }
 
 .task-not-completed {
-    color: black;
+    color: #f56767;
     font-size: 13px;
 }
 
