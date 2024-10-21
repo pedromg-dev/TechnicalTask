@@ -1,0 +1,27 @@
+<div class="task-list-container">
+    <ul class="task-list">
+        @for (task of taskList; track task) {
+        <li style="display: flex; gap: 20px;">
+
+            <div>
+                {{ task.title }}
+            </div>
+
+            <div>
+                @if(task.isCompleted) {
+                <span class="task-completed">
+                    Is completed
+                </span>
+                }
+                @else {
+                <span class="task-not-completed">
+                    Not completed
+                </span>
+                }
+            </div>
+        </li>
+        }
+
+    </ul>
+
+</div>
